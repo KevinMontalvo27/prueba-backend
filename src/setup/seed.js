@@ -1,9 +1,7 @@
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
 import axios from 'axios';
 import connectDB from './dbconnection.js';
 
-dotenv.config();
 
 let BASE_URL = 'https://swapi.info/api';
 
