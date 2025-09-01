@@ -209,8 +209,6 @@ async function poblarDB(){
             getData('people'),
         ]);
 
-        console.log(`Datos obtenidos - Films: ${films.length}, Planets: ${planets.length}, Species: ${species.length}, Starships: ${starships.length}, Vehicles: ${vehicles.length}, People: ${people.length}`);
-
         console.log('Insertando peliculas');
         const peliculasData = films.map(convertirPelicula);
         const peliculas = await Pelicula.insertMany(peliculasData);
