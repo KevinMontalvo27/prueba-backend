@@ -1,4 +1,9 @@
-import { crearPelicula, obtenerPelicula, obtenerPeliculas } from "../services/peliculas.service"; 
+import { crearPelicula, 
+    obtenerPelicula, 
+    obtenerPeliculas, 
+    eliminarPelicula, 
+    actualizarPelicula, 
+    listarPeliculas} from "../services/peliculas.service"; 
 
 
 export async function getPeliculas(req, res){
@@ -12,7 +17,7 @@ export async function getPeliculas(req, res){
 }
 
 export async function getPelicula(req, res){
-    const { id } = req.body;
+    const { id } = req.params.id;
     try{
         const pelicula = await obtenerPelicula(id);
         res.json(pelicula);     
@@ -35,7 +40,7 @@ export async function postPelicula(req, res){
 
 export async function putPelicula(req, res){
     try{
-        const { id } = req.body;
+        const { id } = req.params.id;
         const peliculaActualizada = await actualizarPelicula(id, req.body);
         res.json(peliculaActualizada);
     }catch(error){
@@ -45,7 +50,7 @@ export async function putPelicula(req, res){
 
 export async function deletePelicula(req, res){
     try{
-        const { id } = req.body;
+        const { id } = req.params.id;
         await eliminarPelicula(id);
         res.send(`Pelicula eliminada correctamente`);
     }catch(error){
