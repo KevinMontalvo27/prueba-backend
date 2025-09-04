@@ -1,4 +1,4 @@
-import { actualizarPlaneta, eliminarPlaneta, listarPlanetas, obtenerPlaneta, obtenerPlanetas } from '../services/planetas.service.js';
+import { actualizarPlaneta, eliminarPlaneta, listarPlanetas, obtenerPlaneta, obtenerPlanetas, crearPlaneta } from '../services/planetas.service.js';
 
 export async function getPlanetas(req, res){
     try{
@@ -52,7 +52,7 @@ export async function deletePlaneta(req, res){
     }
 }
 
-export async function getListaPlanetas(res){
+export async function getListaPlanetas(req, res){
     try{
         const planetas = await listarPlanetas();
         res.json(planetas);
