@@ -59,7 +59,7 @@ export async function deleteVehiculo(req, res) {
     }
 }
 
-export async function getVehiculosList(req, res) {
+export async function getListaVehiculos(req, res) {
     try {
         const vehiculos = await listarVehiculos();
         res.json(vehiculos);

@@ -2,7 +2,7 @@ import { actualizarPlaneta, eliminarPlaneta, listarPlanetas, obtenerPlaneta, obt
 
 export async function getPlanetas(req, res){
     try{
-        const planetas = await obtenerPlanetas(req.body);
+        const planetas = await obtenerPlanetas();
         res.json(planetas);
     } catch(error){
         console.error('Error obteniendo planetas', error);
@@ -11,7 +11,7 @@ export async function getPlanetas(req, res){
 }
 
 export async function getPlaneta(req, res){
-    const { id } = req.params.id;
+    const { id } = req.paramsS;
     try{
         const planeta = await obtenerPlaneta(id);
         res.json(planeta);     
@@ -34,7 +34,7 @@ export async function postPlaneta(req, res){
 
 export async function putPlaneta(req, res){
     try{
-        const { id } = req.params.id;
+        const { id } = req.params;
         const planetaActualizado = await actualizarPlaneta(id, req.body);
         res.json(planetaActualizado);
     }catch(error){
@@ -44,7 +44,7 @@ export async function putPlaneta(req, res){
 
 export async function deletePlaneta(req, res){
     try{
-        const { id } = req.params.id;
+        const { id } = req.params;
         await eliminarPlaneta(id);
         res.send(`Planeta eliminado correctamente`);
     }catch(error){

@@ -30,6 +30,7 @@ export async function getEspecie(req, res) {
 export async function getListaEspecies(req, res) {
     try {
         const especies = await obtenerListaEspecies();
+        res.json(especies);
     } catch (error) {
         console.error('Error obteniendo lista de especies', error);
         res.json({ message: 'Error obteniendo lista de especies' });

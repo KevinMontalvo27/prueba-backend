@@ -53,7 +53,7 @@ export async function deleteNave(req, res) {
     }
 }
 
-export async function getNavesList(req, res) {
+export async function getListaNaves(req, res) {
     try {
         const naves = await listarNaves();
         res.json(naves);
