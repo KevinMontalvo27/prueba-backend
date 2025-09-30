@@ -1,6 +1,5 @@
 import { Personaje } from "../model/models.js";
 
-
 export async function obtenerPersonajes(opciones = {}) {
     const {
         page = 1,
@@ -14,7 +13,6 @@ export async function obtenerPersonajes(opciones = {}) {
     const limitNum = parseInt(limit);
     const skip = (pageNum - 1) * limitNum;
 
-    // Construir filtro de búsqueda
     let filtro = {};
     if (search) {
         filtro = {
