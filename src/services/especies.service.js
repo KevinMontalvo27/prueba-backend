@@ -1,15 +1,53 @@
-import { Especie } from "../model/models";
-import connectDB from "../setup/dbconnection";
+import { Especie } from "../model/models.js";
 
+export async function obtenerEspecies(opciones = {}) {
+    const {
+        page = 1,
+        limit = 10,
+        sortBy = 'nombre',
+        sortOrder = 'asc'
+    } = opciones;
 
+    const pageNum = parseInt(page);
+    const limitNum = parseInt(limit);
+    const skip = (pageNum - 1) * limitNum;
 
-export async function obtenerEspecies(){
-    return await Especie
-    .find()
-    .populate('planetaNatal', 'nombre')
-    .select('-createdAt -updatedAt')
-    .exec();
-}  
+    const ordenamiento = {};
+    ordenamiento[sortBy] = sortOrder === 'desc' ? -1 : 1;
+
+    try {
+        const [especies, total] = await Promise.all([
+            Especie.find({})
+                .populate('planetaNatal', 'nombre')
+                .select('-createdAt -updatedAt')
+                .sort(ordenamiento)
+                .skip(skip)
+                .limit(limitNum)
+                .exec(),
+            Especie.countDocuments({})
+        ]);
+
+        const totalPages = Math.ceil(total / limitNum);
+        const hasNextPage = pageNum < totalPages;
+        const hasPrevPage = pageNum > 1;
+
+        return {
+            data: especies,
+            pagination: {
+                currentPage: pageNum,
+                totalPages,
+                totalItems: total,
+                itemsPerPage: limitNum,
+                hasNextPage,
+                hasPrevPage,
+                nextPage: hasNextPage ? pageNum + 1 : null,
+                prevPage: hasPrevPage ? pageNum - 1 : null
+            }
+        };
+    } catch (error) {
+        throw new Error(`Error al obtener especies: ${error.message}`);
+    }
+}
 
 export async function obtenerEspecie(id){
     return await Especie
@@ -19,19 +57,43 @@ export async function obtenerEspecie(id){
     .exec();
 }
 
-export async function obtenerListaEspecies(){
-    return await Especie
-    .find()
-    .select('id nombre')
-    .exec();
+export async function listarEspecies() {
+    try {
+        const especies = await Especie.find()
+            .select('id nombre')
+            .exec();
+
+        return {
+            data: especies,
+            total: especies.length
+        };
+    } catch (error) {
+        throw new Error(`Error al obtener lista de especies: ${error.message}`);
+    }
 }
 
 export async function crearEspecie(data){
+
+    const especieExistente = await Especie.findOne({ nombre: data.nombre }).exec();
+    if (especieExistente) {
+        throw new Error('Ya existe una especie con ese nombre');
+    }
     const especie = new Especie(data);
     return await especie.save();
 }
 
 export async function actualizarEspecie(id, data){
+
+    if (data.nombre) {
+        const especieExistente = await Especie.findOne({ 
+            nombre: data.nombre, 
+            _id: { $ne: id }
+        });
+        if (especieExistente) {
+            throw new Error(`Ya existe una especie con el nombre "${data.nombre}"`);
+        }
+    }
+
     return await Especie.findByIdAndUpdate(id, data)
     .select('-createdAt -updatedAt')
     .exec();
@@ -42,23 +104,3 @@ export async function eliminarEspecie(id){
     .exec();
 }
 
-async function main(){
-    const data = {
-        nombre: "Especie de prueba2",
-        clasificacion: "Clasificacion de prueba2",
-        designacion: "Designacion de prueba2",
-        estatura: 180,
-        esperanzaVida: 120,
-        colorOjos: "Azul2",
-        planetaNatal: "68b73682c992ef001747e448"
-    }
-    const id = '68b9c53bd11f2aa9705439d9'
-    connectDB();
-    
-    const especies = await obtenerEspecies();
-    console.log(especies);
-
-    process.exit();
-}
-
-main();
