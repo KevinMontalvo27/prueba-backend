@@ -4,14 +4,16 @@ import { getPlanetas,
     getListaPlanetas, 
     postPlaneta, 
     putPlaneta, 
-    deletePlaneta} 
-    from '../controllers/planetas.controller';
+    deletePlaneta,}   
+    from '../controllers/planetas.controller.js';
 
 const router = express.Router();
 
 router.get('/', getPlanetas);
-router.get('/planetas', getListaPlanetas);
-router.get('/planetas/:id', getPlaneta);
-router.post('/planetas', postPlaneta);
-router.put('/planetas/:id', putPlaneta);
-router.delete('/planetas/:id', deletePlaneta);
+router.get('/lista', getListaPlanetas);
+router.get('/:id', getPlaneta);
+router.post('/', postPlaneta);
+router.put('/:id', putPlaneta);
+router.delete('/:id', deletePlaneta);
+
+export default router;

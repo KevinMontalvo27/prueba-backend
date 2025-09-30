@@ -10,10 +10,11 @@ import { getNaves,
 const router = express.Router();
 
 router.get('/', getNaves);
-router.get('/naves', getListaNaves);
-router.get('/naves/:id', getNave);
-router.post('/naves', postNave);
-router.put('/naves/:id', putNave);
-router.delete('/naves/:id', deleteNave);
+router.get('/lista', getListaNaves);
+router.get('/buscar', getListaNaves);
+router.get('/:id', getNave);
+router.post('/', postNave);
+router.put('/:id', putNave);
+router.delete('/:id', deleteNave);
 
 export default router;

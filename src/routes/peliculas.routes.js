@@ -1,20 +1,19 @@
-import express from 'express';
+    import express from 'express';
+    import {getPeliculas, 
+        getPelicula, 
+        getListaPeliculas,
+        postPelicula,
+        putPelicula,
+        deletePelicula,}
+        from '../controllers/peliculas.controller.js';
 
-import {getPeliculas, 
-    getPelicula, 
-    getListaPeliculas,
-    postPelicula,
-    putPelicula,
-    deletePelicula }
-    from '../controllers/peliculas.controller.js';
+    const router = express.Router();
 
-const router = express.Router();
+    router.get('/', getPeliculas);
+    router.get('/lista', getListaPeliculas);    
+    router.get('/:id', getPelicula);
+    router.post('/', postPelicula);
+    router.put('/:id', putPelicula);
+    router.delete('/:id', deletePelicula);
 
-router.get('/', getPeliculas);
-router.get('/peliculas', getListaPeliculas);    
-router.get('/peliculas/:id', getPelicula);
-router.post('/peliculas', postPelicula);
-router.put('/peliculas/:id', putPelicula);
-router.delete('/peliculas/:id', deletePelicula);
-
-export default router;
+    export default router;

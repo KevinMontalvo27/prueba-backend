@@ -5,13 +5,16 @@ import { getVehiculos,
     postVehiculo,
     putVehiculo,
     deleteVehiculo} 
-    from '../controllers/vehiculos.controller';
+    from '../controllers/vehiculos.controller.js';
 
 const router = express.Router();
 
 router.get('/', getVehiculos);
-router.get('/vehiculos', getListaVehiculos);
-router.get('/vehiculos/:id', getVehiculo);
-router.post('/vehiculos', postVehiculo);
-router.put('/vehiculos/:id', putVehiculo);
-router.delete('/vehiculos/:id', deleteVehiculo);
+router.get('/lista', getListaVehiculos);
+router.get('/:id', getVehiculo);
+router.post('/', postVehiculo);
+router.put('/:id', putVehiculo);
+router.delete('/:id', deleteVehiculo);
+
+
+export default router;

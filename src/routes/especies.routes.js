@@ -1,5 +1,4 @@
 import express from 'express';
-
 import { getEspecies, 
     getEspecie, 
     getListaEspecies, 
@@ -12,11 +11,11 @@ const router = express.Router();
 
 
 router.get('/', getEspecies);
-router.get('/especies', getListaEspecies);
-router.get('/especies/:id', getEspecie);
-router.post('/especies', postEspecie);
-router.put('/especies/:id', putEspecie);
-router.delete('/especies/:id', deleteEspecie);
+router.get('/lista', getListaEspecies);
+router.get('/:id', getEspecie);
+router.post('/', postEspecie);
+router.put('/:id', putEspecie);
+router.delete('/:id', deleteEspecie);
 
 export default router;
 
