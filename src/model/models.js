@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const baseSchema = {
+const baseSchema =      {
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
 }
